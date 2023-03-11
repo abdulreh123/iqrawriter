@@ -6,6 +6,7 @@ import { setDoc, getDoc, doc } from 'firebase/firestore'
 const { Header, Content, Footer } = Layout
 function Home() {
   const [data, setData] = useState({})
+  const [subscribed, setSubscribed] = useState(false)
   const Onchange = (e) => {
     const { name } = e.target
     const { value } = e.target
@@ -18,8 +19,14 @@ function Home() {
     const ref = doc(db, 'subscribers', 'JpzAa4KvMlscSVpPEELB');
     const y = await getDoc(ref)
     let newData = [...y.data().emails]
-    newData.push(data)
-    await setDoc(ref, { emails: newData })
+    const exists =newData.find(users=>users.email===data.email)
+    if(!exists && data.email && data.name){
+      setSubscribed(true)
+      newData.push(data)
+      await setDoc(ref, { emails: newData })
+    }
+    document.getElementById("form1").reset();
+
   }
 
   return (
@@ -43,7 +50,7 @@ function Home() {
         </div>
         <div className="section-two" style={{ padding: '50px' }}>
           <h1>Subscribe</h1>
-          <Form>
+          <Form id="form1">
             <Form.Item label="Name" name="name">
               <Input name='name' onChange={Onchange} />
             </Form.Item>
@@ -53,7 +60,9 @@ function Home() {
             <Form.Item label="Email" name="email">
               <Input name='email' onChange={Onchange} />
             </Form.Item>
-            <Button style={{ backgroundColor: 'black' }} type="primary" htmlType="submit" onClick={submit}>Submit</Button>
+            {subscribed ? ( // new message when user is subscribed
+              <p style={{ fontSize: '24px', fontWeight: 'bold' }}>Thank you for subscribing!</p>
+            ) :( <Button style={{ backgroundColor: 'black' }} type="primary" htmlType="submit" onClick={submit}>Submit</Button>)}
           </Form>
         </div>
       </Content>
