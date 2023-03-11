@@ -45,7 +45,11 @@ function Home() {
         </Menu>
       </Header>
       <Content>
-        <div className="section-one" style={{ backgroundImage: 'url(https://static.wixstatic.com/media/8d5421_b43a935516284a6ea23e30ebc601aa5c~mv2.jpeg/v1/fill/w_1080,h_577,al_c,q_85,enc_auto/8d5421_b43a935516284a6ea23e30ebc601aa5c~mv2.jpeg)', backgroundSize: 'cover', backgroundPosition: 'center', height: '600px', display: 'flex', alignItems: 'center' }}>
+        <div className="section-one" style={{ backgroundImage: 'url(https://static.wixstatic.com/media/8d5421_b43a935516284a6ea23e30ebc601aa5c~mv2.jpeg/v1/fill/w_1080,h_577,al_c,q_85,enc_auto/8d5421_b43a935516284a6ea23e30ebc601aa5c~mv2.jpeg)', 
+        backgroundSize: '100% auto', backgroundPosition: 'center', height: '600px', display: 'flex', alignItems: 'center',
+        '@media(max-width: 768px)': { 
+          height: '300px' // adjust height for smaller screens
+        } }}>
           <div style={{ paddingLeft: '50px' }}>
             <p style={{ fontSize: '24px', fontWeight: 'bold' }}>Enjoy free printables on subscribing and get<br></br> updates on my up coming children's picture book</p>
             <Button type="primary" style={{ backgroundColor: 'black' }}onClick={handleScrollToSectionTwo}>Subscribe</Button>

@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { db } from './firebase';
 import { getDoc,doc } from 'firebase/firestore';
-import { Layout, Menu, Image } from 'antd';
+import { Layout, Menu, Image,Button } from 'antd';
 import { FacebookOutlined, TwitterOutlined, InstagramOutlined } from '@ant-design/icons';
 import { Table } from 'antd';
 const { Header, Footer } = Layout
@@ -41,6 +41,16 @@ function Subscribers() {
       email: subscriber.email,
     };
   });
+  const downloadEmails = () => {
+    const emails = subscribers.map(subscriber => subscriber.email);
+    const emailsText = emails.join(',');
+    const element = document.createElement('a');
+    const file = new Blob([emailsText], {type: 'text/plain'});
+    element.href = URL.createObjectURL(file);
+    element.download = 'emails.txt';
+    document.body.appendChild(element); // Required for this to work in FireFox
+    element.click();
+  };
   return (
     <Layout theme="light">
     <Header style={{ backgroundColor: 'white' }}>
@@ -55,6 +65,7 @@ function Subscribers() {
     </Header>
     
     <div >
+    <Button onClick={downloadEmails}>Download Emails</Button>
     <div style={{height: '600px' }}>
     <Table columns={columns} dataSource={data} />
     </div>
