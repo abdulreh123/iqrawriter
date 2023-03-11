@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState,useRef } from 'react';
 import { Layout, Menu, Image, Button, Form, Input } from 'antd';
 import { FacebookOutlined, TwitterOutlined, InstagramOutlined } from '@ant-design/icons';
 import { db } from './firebase'
@@ -7,6 +7,7 @@ const { Header, Content, Footer } = Layout
 function Home() {
   const [data, setData] = useState({})
   const [subscribed, setSubscribed] = useState(false)
+  const sectionTwoRef = useRef(null);
   const Onchange = (e) => {
     const { name } = e.target
     const { value } = e.target
@@ -28,7 +29,9 @@ function Home() {
     document.getElementById("form1").reset();
 
   }
-
+  const handleScrollToSectionTwo = () => {
+      sectionTwoRef.current.scrollIntoView({ behavior: 'smooth' });
+  }
   return (
     <Layout theme="light">
       <Header style={{ backgroundColor: 'white' }}>
@@ -45,10 +48,10 @@ function Home() {
         <div className="section-one" style={{ backgroundImage: 'url(https://static.wixstatic.com/media/8d5421_b43a935516284a6ea23e30ebc601aa5c~mv2.jpeg/v1/fill/w_1080,h_577,al_c,q_85,enc_auto/8d5421_b43a935516284a6ea23e30ebc601aa5c~mv2.jpeg)', backgroundSize: 'cover', backgroundPosition: 'center', height: '600px', display: 'flex', alignItems: 'center' }}>
           <div style={{ paddingLeft: '50px' }}>
             <p style={{ fontSize: '24px', fontWeight: 'bold' }}>Enjoy free printables on subscribing and get<br></br> updates on my up coming children's picture book</p>
-            <Button type="primary" style={{ backgroundColor: 'black' }}>Subscribe</Button>
+            <Button type="primary" style={{ backgroundColor: 'black' }}onClick={handleScrollToSectionTwo}>Subscribe</Button>
           </div>
         </div>
-        <div className="section-two" style={{ padding: '50px' }}>
+        <div className="section-two" ref={sectionTwoRef} style={{ padding: '50px' }}>
           <h1>Subscribe</h1>
           <Form id="form1">
             <Form.Item label="Name" name="name">
